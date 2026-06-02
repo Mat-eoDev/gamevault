@@ -64,41 +64,32 @@
                 </HBox>
             </VBox>
 
-            <TableView fx:id="gameTable" VBox.vgrow="ALWAYS" styleClass="game-table">
-                <columns>
-                    <TableColumn fx:id="colTitle"    text="TITRE"      prefWidth="310"/>
-                    <TableColumn fx:id="colPlatform" text="PLATEFORME" prefWidth="160"/>
-                    <TableColumn fx:id="colYear"     text="ANNÉE"      prefWidth="80"/>
-                    <TableColumn fx:id="colRating"   text="NOTE"       prefWidth="80"/>
-                    <TableColumn fx:id="colStatus"   text="STATUT"     prefWidth="130"/>
-                </columns>
-                <placeholder><Label text="Aucun jeu dans la collection"/></placeholder>
-            </TableView>
+            <!-- Grille de jeux -->
+            <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true" hbarPolicy="NEVER" styleClass="grid-scroll">
+                <FlowPane fx:id="gameGrid" hgap="16" vgap="16" styleClass="game-grid">
+                    <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+                </FlowPane>
+            </ScrollPane>
 
-            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="status-bar">
+            <HBox alignment="CENTER_LEFT" styleClass="status-bar">
                 <Label fx:id="statusBar" text="" styleClass="page-subtitle"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button text="Modifier"  styleClass="secondary-button" onAction="#onEditGame"/>
-                <Button text="Supprimer" styleClass="danger-button"    onAction="#onDeleteGame"/>
             </HBox>
         </VBox>
     </center>
 
     <!-- DETAIL PANEL -->
     <right>
-        <ScrollPane fitToWidth="true" prefWidth="290" hbarPolicy="NEVER" styleClass="detail-scroll">
+        <ScrollPane fitToWidth="true" prefWidth="300" hbarPolicy="NEVER" styleClass="detail-scroll">
             <VBox spacing="14" styleClass="detail-panel">
                 <padding><Insets top="28" right="20" bottom="28" left="20"/></padding>
 
-                <!-- Empty state -->
                 <Label fx:id="detailEmpty"
                        text="Sélectionnez un jeu&#10;pour voir ses détails"
                        styleClass="detail-empty" wrapText="true"
                        maxWidth="Infinity" textAlignment="CENTER"/>
 
-                <!-- Game details -->
                 <VBox fx:id="detailContent" spacing="12" visible="false" managed="false">
-                    <ImageView fx:id="detailCover" fitWidth="210" fitHeight="280"
+                    <ImageView fx:id="detailCover" fitWidth="220" fitHeight="300"
                                preserveRatio="true"/>
                     <Label fx:id="detailTitle" styleClass="detail-title" wrapText="true"/>
                     <Separator/>
@@ -108,21 +99,28 @@
                             <ColumnConstraints hgrow="ALWAYS"/>
                         </columnConstraints>
                         <Label text="Plateforme"  styleClass="detail-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <Label fx:id="detailPlatform"    styleClass="detail-value" wrapText="true" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                        <Label text="Année"       styleClass="detail-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <Label fx:id="detailYear"        styleClass="detail-value" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                        <Label text="Développeur" styleClass="detail-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <Label fx:id="detailDeveloper"   styleClass="detail-value" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                        <Label text="Éditeur"     styleClass="detail-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <Label fx:id="detailPublisher"   styleClass="detail-value" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-                        <Label text="Note"        styleClass="detail-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                        <Label fx:id="detailRating"      styleClass="detail-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-                        <Label text="Statut"      styleClass="detail-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                        <Label fx:id="detailStatus"      styleClass="detail-value" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                        <Label fx:id="detailPlatform"  styleClass="detail-value" wrapText="true" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <Label text="Année"        styleClass="detail-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailYear"      styleClass="detail-value" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <Label text="Développeur"  styleClass="detail-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailDeveloper" styleClass="detail-value" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <Label text="Éditeur"      styleClass="detail-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailPublisher" styleClass="detail-value" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <Label text="Note"         styleClass="detail-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailRating"    styleClass="detail-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                        <Label text="Statut"       styleClass="detail-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailStatus"    styleClass="detail-value" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
                     </GridPane>
                     <Separator/>
                     <Label text="Description" styleClass="detail-label"/>
                     <Label fx:id="detailDescription" styleClass="description" wrapText="true"/>
+                    <Separator/>
+                    <HBox spacing="8">
+                        <Button text="Modifier"  HBox.hgrow="ALWAYS" maxWidth="Infinity"
+                                styleClass="secondary-button" onAction="#onEditGame"/>
+                        <Button text="Supprimer" HBox.hgrow="ALWAYS" maxWidth="Infinity"
+                                styleClass="danger-button" onAction="#onDeleteGame"/>
+                    </HBox>
                 </VBox>
 
             </VBox>
