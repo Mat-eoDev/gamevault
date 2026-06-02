@@ -140,7 +140,7 @@ hibernate.hbm2ddl.auto=update # création automatique des tables
 ## Conception UX/UI
 
 <!-- TODO: ajouter le lien Figma quand Yanina l'envoie -->
-> Maquette Figma : *à venir*
+> Maquette Figma :(https://www.figma.com/design/97oEW9HmVjYaFCPD2Qtinc/GAMEVAULT?node-id=0-1&t=HmV5dn2osaFAjBNA-1)
 
 Le document de justification des choix ergonomiques est disponible dans [`docs/ux-justification.md`](docs/ux-justification.md).
 
