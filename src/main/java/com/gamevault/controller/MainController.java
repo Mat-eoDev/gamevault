@@ -1,125 +1,42 @@
 package com.gamevault.controller;
 
-import com.gamevault.model.Game;
-import com.gamevault.model.GameStatus;
 import com.gamevault.service.GameService;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
+// TODO (Hiba) : relier les éléments FXML, implémenter l'affichage de la liste et les actions
 public class MainController implements Initializable {
 
-    @FXML private TextField searchField;
-    @FXML private ComboBox<String> platformFilter;
-    @FXML private ComboBox<String> statusFilter;
-    @FXML private TableView<Game> gameTable;
-    @FXML private TableColumn<Game, String> colTitle;
-    @FXML private TableColumn<Game, String> colPlatform;
-    @FXML private TableColumn<Game, Integer> colYear;
-    @FXML private TableColumn<Game, Double> colRating;
-    @FXML private TableColumn<Game, String> colStatus;
-    @FXML private Label statusBar;
+    // TODO (Hiba) : déclarer les @FXML (TableView, TextField recherche, ComboBox filtres, Label statusBar…)
 
     private final GameService gameService = new GameService();
-    private final ObservableList<Game> displayedGames = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        bindColumns();
-        initFilters();
-        gameTable.setItems(displayedGames);
-        refresh();
+        // TODO : initialiser la table, les filtres, charger la liste
     }
 
-    @FXML private void onSearch() { refresh(); }
+    @FXML
+    private void onSearch() {
+        // TODO : lancer la recherche et mettre à jour la table
+    }
 
     @FXML
-    private void onAddGame() { openForm(null); }
+    private void onAddGame() {
+        // TODO : ouvrir GameFormView en mode création
+    }
 
     @FXML
     private void onEditGame() {
-        Game selected = gameTable.getSelectionModel().getSelectedItem();
-        if (selected != null) openForm(selected);
+        // TODO : ouvrir GameFormView en mode édition avec le jeu sélectionné
     }
 
     @FXML
     private void onDeleteGame() {
-        Game selected = gameTable.getSelectionModel().getSelectedItem();
-        if (selected == null) return;
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
-                "Supprimer « " + selected.getTitle() + " » ?", ButtonType.YES, ButtonType.NO);
-        confirm.setHeaderText(null);
-        confirm.showAndWait().filter(b -> b == ButtonType.YES).ifPresent(b -> {
-            gameService.deleteGame(selected);
-            refresh();
-        });
-    }
-
-    private void bindColumns() {
-        colTitle.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().getTitle()));
-        colPlatform.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().getPlatform()));
-        colYear.setCellValueFactory(d -> new SimpleObjectProperty<>(d.getValue().getReleaseYear()));
-        colRating.setCellValueFactory(d -> new SimpleObjectProperty<>(d.getValue().getRating()));
-        colStatus.setCellValueFactory(d -> new SimpleStringProperty(
-                d.getValue().getStatus() != null ? d.getValue().getStatus().getLabel() : ""));
-    }
-
-    private void initFilters() {
-        platformFilter.getItems().add("Toutes plateformes");
-        platformFilter.setValue("Toutes plateformes");
-        platformFilter.setOnAction(e -> refresh());
-
-        statusFilter.getItems().add("Tous statuts");
-        for (GameStatus s : GameStatus.values()) statusFilter.getItems().add(s.getLabel());
-        statusFilter.setValue("Tous statuts");
-        statusFilter.setOnAction(e -> refresh());
-    }
-
-    private void refresh() {
-        List<Game> results = gameService.search(searchField.getText());
-        String platform = "Toutes plateformes".equals(platformFilter.getValue()) ? null : platformFilter.getValue();
-        GameStatus status = resolveStatus(statusFilter.getValue());
-        results = gameService.filter(results, platform, status);
-        displayedGames.setAll(results);
-        statusBar.setText(results.size() + " jeu(x) affiché(s)");
-    }
-
-    private GameStatus resolveStatus(String label) {
-        if (label == null || "Tous statuts".equals(label)) return null;
-        for (GameStatus s : GameStatus.values()) {
-            if (s.getLabel().equals(label)) return s;
-        }
-        return null;
-    }
-
-    private void openForm(Game game) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GameFormView.fxml"));
-            Parent root = loader.load();
-            GameFormController ctrl = loader.getController();
-            ctrl.setGame(game);
-            ctrl.setOnSaved(this::refresh);
-            Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.setTitle(game == null ? "Ajouter un jeu" : "Modifier un jeu");
-            dialog.setScene(new Scene(root));
-            dialog.showAndWait();
-        } catch (IOException e) {
-            new Alert(Alert.AlertType.ERROR, "Impossible d'ouvrir le formulaire : " + e.getMessage()).showAndWait();
-        }
+        // TODO : demander confirmation puis supprimer le jeu sélectionné
     }
 }

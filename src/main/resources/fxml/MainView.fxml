@@ -2,32 +2,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<!--
+    TODO (Hiba) : construire la vue principale
+    - Sidebar avec navigation
+    - Barre de recherche + filtres (plateforme, statut) + boutons Ajouter / Modifier / Supprimer
+    - TableView avec colonnes : Titre, Plateforme, Année, Note, Statut
+    - Panneau de détail sur la droite (jaquette + infos du jeu sélectionné)
+    - Barre de statut en bas (nombre de jeux affichés)
+-->
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.gamevault.controller.MainController"
             prefWidth="1280" prefHeight="800">
+
     <center>
-        <VBox spacing="16" style="-fx-padding: 24;">
-            <Label text="Ma collection" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
-            <HBox spacing="8">
-                <TextField fx:id="searchField" promptText="Rechercher un jeu..." prefWidth="280" onAction="#onSearch"/>
-                <Button text="Chercher" onAction="#onSearch"/>
-                <ComboBox fx:id="platformFilter" prefWidth="160"/>
-                <ComboBox fx:id="statusFilter" prefWidth="140"/>
-                <Button text="Ajouter" onAction="#onAddGame"/>
-                <Button text="Modifier" onAction="#onEditGame"/>
-                <Button text="Supprimer" onAction="#onDeleteGame"/>
-            </HBox>
-            <TableView fx:id="gameTable" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="colTitle"    text="Titre"      prefWidth="300"/>
-                    <TableColumn fx:id="colPlatform" text="Plateforme" prefWidth="160"/>
-                    <TableColumn fx:id="colYear"     text="Année"      prefWidth="80"/>
-                    <TableColumn fx:id="colRating"   text="Note"       prefWidth="80"/>
-                    <TableColumn fx:id="colStatus"   text="Statut"     prefWidth="120"/>
-                </columns>
-                <placeholder><Label text="Aucun jeu dans la collection"/></placeholder>
-            </TableView>
-            <Label fx:id="statusBar" text=""/>
-        </VBox>
+        <Label text="Vue principale – à construire (Hiba)"/>
     </center>
+
 </BorderPane>

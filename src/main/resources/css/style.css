@@ -1,4 +1,10 @@
-/* Style de base – à enrichir par Hiba (Rôle 3 Frontend) */
+/*
+    TODO (Hiba) : définir le thème visuel de l'application
+    - Palette de couleurs (fond sombre recommandé)
+    - Styles sidebar, boutons, table, formulaire
+    - Styles d'état (statut Terminé = vert, En cours = orange, etc.)
+*/
+
 .root {
     -fx-font-family: "Segoe UI", Arial, sans-serif;
     -fx-font-size: 13px;
