@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.gamevault.controller.GameFormController"
+      spacing="12" style="-fx-padding: 24;" prefWidth="500">
+
+    <TextField fx:id="titleField" promptText="Titre *"/>
+    <TextField fx:id="developerField" promptText="Développeur"/>
+    <TextField fx:id="publisherField" promptText="Éditeur"/>
+    <TextField fx:id="yearField" promptText="Année (ex: 2021)"/>
+    <ComboBox fx:id="platformCombo" maxWidth="Infinity" editable="true"/>
+    <TextArea fx:id="descriptionArea" promptText="Description…" prefRowCount="3"/>
+    <Slider fx:id="ratingSlider" min="0" max="10" value="0" showTickLabels="true" majorTickUnit="2"/>
+    <Label fx:id="ratingLabel" text="0.0 / 10"/>
+    <ComboBox fx:id="statusCombo" prefWidth="200"/>
+    <ImageView fx:id="coverPreview" fitWidth="120" fitHeight="160" preserveRatio="true"/>
+    <Button text="Choisir une jaquette" onAction="#onChooseCover"/>
+    <Label fx:id="errorLabel" style="-fx-text-fill: red;" wrapText="true"/>
+    <HBox spacing="8">
+        <Button text="Annuler" onAction="#onCancel"/>
+        <Button text="Enregistrer" onAction="#onSave"/>
+    </HBox>
+</VBox>

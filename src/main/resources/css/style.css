@@ -1,0 +1,5 @@
+/* Style de base – à enrichir par Hiba (Rôle 3 Frontend) */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-size: 13px;
+}
