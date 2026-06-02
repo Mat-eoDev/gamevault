@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.ynov.controller.DeleteDialogController"
+      spacing="18"
+      alignment="CENTER"
+      prefWidth="420"
+      prefHeight="260"
+      styleClass="delete-dialog">
+
+    <padding>
+        <Insets top="28" right="30" bottom="28" left="30"/>
+    </padding>
+
+    <Circle radius="28" styleClass="delete-icon-circle"/>
+
+    <Label text="Supprimer ce jeu ?"
+           styleClass="delete-title"/>
+
+    <Label text="Cette action est définitive. Le jeu sera retiré de votre collection."
+           wrapText="true"
+           textAlignment="CENTER"
+           styleClass="delete-message"/>
+
+    <HBox spacing="14" alignment="CENTER">
+        <Button text="Annuler"
+                prefWidth="130"
+                styleClass="secondary-button"
+                onAction="#cancelDelete"/>
+
+        <Button text="Supprimer"
+                prefWidth="130"
+                styleClass="danger-button"
+                onAction="#confirmDelete"/>
+    </HBox>
+
+</VBox>

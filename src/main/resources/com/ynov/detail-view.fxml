@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ynov.controller.DetailController"
+            styleClass="app-root">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="top-bar">
+            <padding>
+                <Insets top="14" right="24" bottom="14" left="24"/>
+            </padding>
+            <Button onAction="#goBackToCollection"
+                    styleClass="logo-button">
+                <graphic>
+                    <ImageView fitWidth="350"
+                               fitHeight="110"
+                               preserveRatio="true">
+                        <image>
+                            <Image url="@images/logo.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <?import javafx.scene.image.Image?>
+
+
+            <Label text="> Détail du jeu" styleClass="breadcrumb"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="Retour"
+                    styleClass="secondary-button"
+                    onAction="#goBackToCollection"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="22" styleClass="content-area">
+            <padding>
+                <Insets top="34" right="60" bottom="34" left="60"/>
+            </padding>
+
+            <HBox spacing="34" styleClass="detail-card">
+                <padding>
+                    <Insets top="28" right="28" bottom="28" left="28"/>
+                </padding>
+
+                <Rectangle width="250" height="320" arcWidth="18" arcHeight="18"
+                           styleClass="cover-large"/>
+
+                <VBox spacing="14" HBox.hgrow="ALWAYS">
+                    <Label text="The Legend of Zelda" styleClass="detail-title"/>
+
+                    <GridPane hgap="18" vgap="12">
+                        <columnConstraints>
+                            <ColumnConstraints prefWidth="140"/>
+                            <ColumnConstraints prefWidth="300"/>
+                        </columnConstraints>
+
+                        <Label text="Plateforme :" styleClass="detail-label"
+                               GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label text="Nintendo Switch" styleClass="detail-value"
+                               GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Développeur :" styleClass="detail-label"
+                               GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label text="Nintendo" styleClass="detail-value"
+                               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Éditeur :" styleClass="detail-label"
+                               GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <Label text="Nintendo" styleClass="detail-value"
+                               GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Année :" styleClass="detail-label"
+                               GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <Label text="2017" styleClass="detail-value"
+                               GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label text="Note :" styleClass="detail-label"
+                               GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <Label text="9.5 / 10" styleClass="detail-value"
+                               GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                        <Label text="Statut :" styleClass="detail-label"
+                               GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <Label text="Terminé" styleClass="status-done"
+                               GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                        <Label text="Genres :" styleClass="detail-label"
+                               GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                        <Label text="Aventure, Action" styleClass="detail-value"
+                               GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                    </GridPane>
+
+                    <Separator/>
+
+                    <Label text="Description :" styleClass="section-title"/>
+
+                    <Label wrapText="true"
+                           styleClass="description"
+                           text="Aventure en monde ouvert dans le royaume d’Hyrule : exploration, énigmes et liberté totale d’approche. Le joueur explore librement un vaste univers, découvre des sanctuaires, améliore son équipement et progresse à son rythme."/>
+
+                    <Region VBox.vgrow="ALWAYS"/>
+
+                    <HBox spacing="14" alignment="CENTER_RIGHT">
+                        <Button text="Modifier"
+                                styleClass="secondary-button"
+                                onAction="#goToEditGame"/>
+
+                        <Button text="Supprimer"
+                                styleClass="danger-button"
+                                onAction="#confirmDelete"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

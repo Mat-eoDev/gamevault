@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ynov.controller.GameFormController"
+            styleClass="app-root">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="top-bar">
+            <padding>
+                <Insets top="14" right="24" bottom="14" left="24"/>
+            </padding>
+
+            <Button onAction="#cancelForm"
+                    styleClass="logo-button">
+                <graphic>
+                    <ImageView fitWidth="350"
+                               fitHeight="110"
+                               preserveRatio="true">
+                        <image>
+                            <Image url="@images/logo.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Label text="> Ajouter un jeu" styleClass="breadcrumb"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="22" styleClass="content-area">
+            <padding>
+                <Insets top="30" right="70" bottom="30" left="70"/>
+            </padding>
+
+            <Label text="Ajouter un jeu" styleClass="page-title"/>
+
+            <HBox spacing="28" styleClass="form-card">
+                <padding>
+                    <Insets top="28" right="28" bottom="28" left="28"/>
+                </padding>
+
+                <VBox spacing="14" alignment="TOP_CENTER" prefWidth="240">
+                    <Rectangle width="210" height="270" arcWidth="16" arcHeight="16"
+                               styleClass="cover-placeholder"/>
+
+                    <Label text="Aperçu de la jaquette" styleClass="page-subtitle"/>
+
+                    <Button text="Choisir une image"
+                            styleClass="secondary-button"
+                            maxWidth="Infinity"
+                            onAction="#chooseImage"/>
+                </VBox>
+
+                <GridPane hgap="18" vgap="16" HBox.hgrow="ALWAYS">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="170"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <Label text="Titre *" styleClass="form-label"
+                           GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="titleField"
+                               promptText="Saisir un titre..."
+                               GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Développeur *" styleClass="form-label"
+                           GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="developerField"
+                               promptText="Nintendo..."
+                               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Éditeur" styleClass="form-label"
+                           GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="publisherField"
+                               promptText="Nintendo..."
+                               GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Année de sortie *" styleClass="form-label"
+                           GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="yearField"
+                               promptText="2017"
+                               GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Plateforme *" styleClass="form-label"
+                           GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="platformComboBox"
+                              maxWidth="Infinity"
+                              GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label text="Genre" styleClass="form-label"
+                           GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <TextField fx:id="genreField"
+                               promptText="Aventure, Action..."
+                               GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <Label text="Statut" styleClass="form-label"
+                           GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="statusComboBox"
+                              maxWidth="Infinity"
+                              GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                    <Label text="Note" styleClass="form-label"
+                           GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                    <Slider fx:id="noteSlider"
+                            min="0"
+                            max="10"
+                            showTickLabels="true"
+                            showTickMarks="true"
+                            majorTickUnit="2"
+                            GridPane.rowIndex="7"
+                            GridPane.columnIndex="1"/>
+
+                    <Label text="Description" styleClass="form-label"
+                           GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                    <TextArea fx:id="descriptionArea"
+                              promptText="Texte descriptif du jeu..."
+                              prefRowCount="5"
+                              GridPane.rowIndex="8"
+                              GridPane.columnIndex="1"/>
+                </GridPane>
+            </HBox>
+
+            <HBox spacing="14" alignment="CENTER_RIGHT">
+                <Button text="Annuler"
+                        styleClass="secondary-button"
+                        onAction="#cancelForm"/>
+
+                <Button text="Enregistrer"
+                        styleClass="primary-button"
+                        onAction="#saveGame"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

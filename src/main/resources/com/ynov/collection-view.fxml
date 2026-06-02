@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ynov.controller.MainController"
+            styleClass="app-root">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="top-bar">
+            <padding>
+                <Insets top="14" right="24" bottom="14" left="24"/>
+            </padding>
+
+            <Button onAction="#goToCollection"
+                    styleClass="logo-button">
+                <graphic>
+                    <ImageView fitWidth="350"
+                               fitHeight="110"
+                               preserveRatio="true">
+                        <image>
+                            <Image url="@images/logo.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <TextField promptText="Recherche..." prefWidth="260" styleClass="search-field"/>
+            <Label text="🔍" styleClass="search-icon"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="14" prefWidth="220" styleClass="side-menu">
+            <padding>
+                <Insets top="28" right="18" bottom="28" left="18"/>
+            </padding>
+
+            <Label text="Menu" styleClass="menu-title"/>
+
+            <Button text="📚  Collection"
+                    maxWidth="Infinity"
+                    styleClass="menu-button-active"
+                    onAction="#goToCollection"/>
+
+            <Button text="➕  Ajouter un jeu"
+                    maxWidth="Infinity"
+                    styleClass="menu-button"
+                    onAction="#goToAddGame"/>
+
+            <Button text="⚙  Paramètres"
+                    maxWidth="Infinity"
+                    styleClass="menu-button"
+                    onAction="#showSettingsMessage"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="18" styleClass="content-area">
+            <padding>
+                <Insets top="26" right="26" bottom="26" left="26"/>
+            </padding>
+
+            <HBox alignment="CENTER_LEFT">
+                <VBox>
+                    <Label text="Ma collection" styleClass="page-title"/>
+                    <Label text="342 jeux" styleClass="page-subtitle"/>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Button text="+ Ajouter"
+                        styleClass="primary-button"
+                        onAction="#goToAddGame"/>
+            </HBox>
+
+            <VBox spacing="12" styleClass="filter-card">
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="Filtres :" styleClass="section-label"/>
+
+                    <ComboBox promptText="Plateforme" prefWidth="160"/>
+                    <ComboBox promptText="Statut" prefWidth="140"/>
+                    <ComboBox promptText="Note" prefWidth="120"/>
+                </HBox>
+
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="Tri :" styleClass="section-label"/>
+
+                    <Button text="Titre" styleClass="small-button"/>
+                    <Button text="Année" styleClass="small-button"/>
+                    <Button text="Note" styleClass="small-button"/>
+                </HBox>
+            </VBox>
+
+            <Label text="Liste des jeux" styleClass="section-title"/>
+
+            <VBox styleClass="table-card" VBox.vgrow="ALWAYS">
+                <GridPane styleClass="table-header">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="18"/>
+                        <ColumnConstraints percentWidth="32"/>
+                        <ColumnConstraints percentWidth="20"/>
+                        <ColumnConstraints percentWidth="15"/>
+                        <ColumnConstraints percentWidth="15"/>
+                    </columnConstraints>
+
+                    <Label text="JAQUETTE" GridPane.columnIndex="0"/>
+                    <Label text="TITRE" GridPane.columnIndex="1"/>
+                    <Label text="PLATEFORME" GridPane.columnIndex="2"/>
+                    <Label text="NOTE" GridPane.columnIndex="3"/>
+                    <Label text="ACTION" GridPane.columnIndex="4"/>
+                </GridPane>
+
+                <GridPane styleClass="table-row">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="18"/>
+                        <ColumnConstraints percentWidth="32"/>
+                        <ColumnConstraints percentWidth="20"/>
+                        <ColumnConstraints percentWidth="15"/>
+                        <ColumnConstraints percentWidth="15"/>
+                    </columnConstraints>
+
+                    <Rectangle width="34" height="42" arcWidth="8" arcHeight="8"
+                               styleClass="cover-small"
+                               GridPane.columnIndex="0"/>
+
+                    <Label text="The Legend of Zelda"
+                           styleClass="game-title"
+                           GridPane.columnIndex="1"/>
+
+                    <Label text="Switch"
+                           GridPane.columnIndex="2"/>
+
+                    <Label text="★ 9.5"
+                           GridPane.columnIndex="3"/>
+
+                    <Button text="Voir"
+                            styleClass="link-button"
+                            onAction="#goToDetail"
+                            GridPane.columnIndex="4"/>
+                </GridPane>
+
+                <GridPane styleClass="table-row">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="18"/>
+                        <ColumnConstraints percentWidth="32"/>
+                        <ColumnConstraints percentWidth="20"/>
+                        <ColumnConstraints percentWidth="15"/>
+                        <ColumnConstraints percentWidth="15"/>
+                    </columnConstraints>
+
+                    <Rectangle width="34" height="42" arcWidth="8" arcHeight="8"
+                               styleClass="cover-small-alt"
+                               GridPane.columnIndex="0"/>
+
+                    <Label text="Hadès"
+                           styleClass="game-title"
+                           GridPane.columnIndex="1"/>
+
+                    <Label text="PC"
+                           GridPane.columnIndex="2"/>
+
+                    <Label text="★ 9.0"
+                           GridPane.columnIndex="3"/>
+
+                    <Button text="Voir"
+                            styleClass="link-button"
+                            onAction="#goToDetail"
+                            GridPane.columnIndex="4"/>
+                </GridPane>
+
+                <GridPane styleClass="table-row">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="18"/>
+                        <ColumnConstraints percentWidth="32"/>
+                        <ColumnConstraints percentWidth="20"/>
+                        <ColumnConstraints percentWidth="15"/>
+                        <ColumnConstraints percentWidth="15"/>
+                    </columnConstraints>
+
+                    <Rectangle width="34" height="42" arcWidth="8" arcHeight="8"
+                               styleClass="cover-small-blue"
+                               GridPane.columnIndex="0"/>
+
+                    <Label text="Hollow Knight"
+                           styleClass="game-title"
+                           GridPane.columnIndex="1"/>
+
+                    <Label text="PC"
+                           GridPane.columnIndex="2"/>
+
+                    <Label text="★ 9.2"
+                           GridPane.columnIndex="3"/>
+
+                    <Button text="Voir"
+                            styleClass="link-button"
+                            onAction="#goToDetail"
+                            GridPane.columnIndex="4"/>
+                </GridPane>
+
+                <GridPane styleClass="table-row">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="18"/>
+                        <ColumnConstraints percentWidth="32"/>
+                        <ColumnConstraints percentWidth="20"/>
+                        <ColumnConstraints percentWidth="15"/>
+                        <ColumnConstraints percentWidth="15"/>
+                    </columnConstraints>
+
+                    <Rectangle width="34" height="42" arcWidth="8" arcHeight="8"
+                               styleClass="cover-small-green"
+                               GridPane.columnIndex="0"/>
+
+                    <Label text="God of War"
+                           styleClass="game-title"
+                           GridPane.columnIndex="1"/>
+
+                    <Label text="PlayStation 4"
+                           GridPane.columnIndex="2"/>
+
+                    <Label text="★ 9.5"
+                           GridPane.columnIndex="3"/>
+
+                    <Button text="Voir"
+                            styleClass="link-button"
+                            onAction="#goToDetail"
+                            GridPane.columnIndex="4"/>
+                </GridPane>
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>
