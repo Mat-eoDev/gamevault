@@ -1,0 +1,40 @@
+# MCD - GameVault
+
+Version MVP conforme a docs/TASKS.md et au code Hibernate actuel.
+
+## Entite
+
+JEU
+- id : identifiant technique du jeu
+- title : titre du jeu, obligatoire
+- developer : studio de developpement, optionnel
+- publisher : editeur, optionnel
+- releaseYear : annee de sortie, optionnelle, comprise entre 1950 et 2100
+- platform : plateforme, obligatoire
+- description : description courte, optionnelle
+- rating : note, optionnelle, comprise entre 0.0 et 10.0
+- status : statut du jeu dans la collection
+- coverPath : chemin local de la jaquette, optionnel
+- addedAt : date d'ajout dans la collection
+
+## Domaine du statut
+
+Le statut est une enumeration applicative :
+- IN_COLLECTION : Collection
+- TO_PLAY : A faire
+- IN_PROGRESS : En cours
+- COMPLETED : Termine
+- ABANDONED : Abandonne
+
+## Regles de gestion
+
+- Un jeu doit toujours avoir un titre.
+- Un jeu doit toujours avoir une plateforme.
+- Une annee de sortie renseignee doit etre comprise entre 1950 et 2100.
+- Une note renseignee doit etre comprise entre 0.0 et 10.0.
+- Si aucun statut n'est fourni, le statut par defaut est IN_COLLECTION.
+- La jaquette n'est pas stockee en base sous forme binaire : seul son chemin local est conserve.
+
+## Choix de modelisation
+
+Le MCD reste volontairement simple pour correspondre au perimetre Marc defini dans TASKS.md. Les notions de developpeur, editeur, plateforme, statut et genre ne sont pas des entites separees dans le MVP : elles sont portees directement par JEU afin de rester coherent avec l'entite Java `Game` et la table Hibernate `games`.

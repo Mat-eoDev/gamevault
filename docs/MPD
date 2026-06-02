@@ -1,0 +1,51 @@
+# MPD - GameVault
+
+Version SQLite conforme a docs/TASKS.md et au code Hibernate actuel.
+
+## Table games
+
+```sql
+CREATE TABLE IF NOT EXISTS games (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    developer TEXT,
+    publisher TEXT,
+    releaseYear INTEGER,
+    platform TEXT NOT NULL,
+    description TEXT,
+    rating REAL,
+    status TEXT NOT NULL DEFAULT 'IN_COLLECTION',
+    coverPath TEXT,
+    addedAt TEXT,
+    CHECK (releaseYear IS NULL OR releaseYear BETWEEN 1950 AND 2100),
+    CHECK (rating IS NULL OR rating BETWEEN 0.0 AND 10.0),
+    CHECK (status IN ('IN_COLLECTION', 'TO_PLAY', 'IN_PROGRESS', 'COMPLETED', 'ABANDONED'))
+);
+```
+
+## Index utiles
+
+```sql
+CREATE INDEX IF NOT EXISTS idx_games_title ON games(title);
+CREATE INDEX IF NOT EXISTS idx_games_platform ON games(platform);
+CREATE INDEX IF NOT EXISTS idx_games_developer ON games(developer);
+CREATE INDEX IF NOT EXISTS idx_games_status ON games(status);
+```
+
+## Correspondance Hibernate
+
+- `id` : `Long`, cle primaire auto-generee.
+- `title` : `String`, obligatoire.
+- `developer` : `String`, optionnel.
+- `publisher` : `String`, optionnel.
+- `releaseYear` : `Integer`, optionnel.
+- `platform` : `String`, obligatoire.
+- `description` : `String`, optionnel, limite applicative 2000 caracteres.
+- `rating` : `Double`, optionnel.
+- `status` : `GameStatus`, stocke en texte via `EnumType.STRING`.
+- `coverPath` : `String`, optionnel.
+- `addedAt` : `LocalDate`, stocke comme texte par SQLite/Hibernate.
+
+## Remarque
+
+Hibernate cree ou met a jour automatiquement la table via `hibernate.hbm2ddl.auto=update`. Le SQL ci-dessus sert de reference MPD pour documenter la structure cible de la base SQLite.

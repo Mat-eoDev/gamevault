@@ -1,0 +1,40 @@
+# MLD - GameVault
+
+Version MVP conforme a docs/TASKS.md et au code Hibernate actuel.
+
+## Relations
+
+games(
+  id PK,
+  title NOT NULL,
+  developer,
+  publisher,
+  releaseYear,
+  platform NOT NULL,
+  description,
+  rating,
+  status NOT NULL,
+  coverPath,
+  addedAt
+)
+
+## Contraintes logiques
+
+- title est obligatoire.
+- platform est obligatoire.
+- releaseYear est optionnel, mais doit etre compris entre 1950 et 2100 s'il est renseigne.
+- rating est optionnel, mais doit etre compris entre 0.0 et 10.0 s'il est renseigne.
+- status prend une valeur de l'enumeration GameStatus : IN_COLLECTION, TO_PLAY, IN_PROGRESS, COMPLETED, ABANDONED.
+- addedAt correspond a la date d'ajout du jeu.
+
+## Correspondance Java
+
+- Table : games
+- Entite Java : com.gamevault.model.Game
+- Enum Java : com.gamevault.model.GameStatus
+- Acces donnees : com.gamevault.repository.GameRepository
+- Logique metier : com.gamevault.service.GameService
+
+## Note
+
+L'ancien MLD normalise avec les tables developpeur, editeur, plateforme, statut, genre et jeu_genre n'est pas retenu pour le MVP, car il deborde du perimetre demande dans TASKS.md et ne correspond pas a l'implementation Hibernate actuelle.
