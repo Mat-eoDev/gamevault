@@ -2,8 +2,6 @@
 
 > Gestionnaire de collection de jeux vidéo pour l'association **RetroSphere**
 
-<!-- TODO: ajouter un screenshot de l'application une fois l'UI terminée -->
-
 ---
 
 ## Présentation
@@ -58,8 +56,6 @@ java --version
 git clone https://github.com/Mat-eoDev/gamevault.git
 cd gamevault
 
-# 2. Se placer sur la branche principale
-git checkout dev
 ```
 
 **Option A — avec le Maven Wrapper (Maven non requis)**
@@ -139,8 +135,7 @@ hibernate.hbm2ddl.auto=update # création automatique des tables
 
 ## Conception UX/UI
 
-<!-- TODO: ajouter le lien Figma quand Yanina l'envoie -->
-> Maquette Figma :(https://www.figma.com/design/97oEW9HmVjYaFCPD2Qtinc/GAMEVAULT?node-id=0-1&t=HmV5dn2osaFAjBNA-1)
+> 🎨 [Maquette Figma](https://www.figma.com/design/97oEW9HmVjYaFCPD2Qtinc/GAMEVAULT?node-id=0-1&t=HmV5dn2osaFAjBNA-1)
 
 Le document de justification des choix ergonomiques est disponible dans [`docs/ux-justification.md`](docs/ux-justification.md).
 
