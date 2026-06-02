@@ -1,48 +1,144 @@
 package com.gamevault.controller;
 
 import com.gamevault.model.Game;
+import com.gamevault.model.GameStatus;
 import com.gamevault.service.GameService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-// TODO (Hiba) : relier les champs FXML du formulaire, gérer la validation visuelle et la sauvegarde
 public class GameFormController implements Initializable {
 
-    // TODO (Hiba) : déclarer les @FXML (TextField titre, développeur, éditeur, année, ComboBox plateforme, statut, Slider note, ImageView jaquette, Label erreur…)
+    @FXML private Label breadcrumbLabel;
+    @FXML private Label formTitle;
+    @FXML private TextField titleField;
+    @FXML private TextField developerField;
+    @FXML private TextField publisherField;
+    @FXML private TextField yearField;
+    @FXML private ComboBox<String> platformCombo;
+    @FXML private ComboBox<GameStatus> statusCombo;
+    @FXML private Slider ratingSlider;
+    @FXML private Label ratingLabel;
+    @FXML private TextArea descriptionArea;
+    @FXML private ImageView coverPreview;
+    @FXML private Label errorLabel;
 
     private final GameService gameService = new GameService();
     private Game game;
     private Runnable onSaved;
+    private String selectedCoverPath;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO : remplir la ComboBox plateforme, initialiser le Slider, la ComboBox statut
+        platformCombo.getItems().addAll(
+                "PC", "PlayStation 5", "PlayStation 4", "PlayStation 3",
+                "Xbox Series X", "Xbox One", "Nintendo Switch", "Nintendo 3DS",
+                "Super Nintendo", "Sega Mega Drive", "Sega Saturn", "Dreamcast", "Autre"
+        );
+        statusCombo.getItems().addAll(GameStatus.values());
+        statusCombo.setValue(GameStatus.IN_COLLECTION);
+
+        ratingSlider.valueProperty().addListener((obs, o, v) ->
+                ratingLabel.setText(String.format("%.1f / 10", v.doubleValue())));
+
+        errorLabel.setVisible(false);
     }
 
     public void setGame(Game game) {
         this.game = game;
-        // TODO : si game != null, pré-remplir tous les champs
+        if (game != null) {
+            formTitle.setText("Modifier un jeu");
+            breadcrumbLabel.setText("> Modifier un jeu");
+            populate(game);
+        }
     }
 
-    public void setOnSaved(Runnable callback) {
-        this.onSaved = callback;
-    }
+    public void setOnSaved(Runnable callback) { this.onSaved = callback; }
 
     @FXML
     private void onChooseCover() {
-        // TODO : ouvrir un FileChooser pour sélectionner une image et l'afficher en prévisualisation
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Choisir une jaquette");
+        fc.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp"));
+        File file = fc.showOpenDialog(coverPreview.getScene().getWindow());
+        if (file != null) {
+            try {
+                selectedCoverPath = file.getAbsolutePath();
+                coverPreview.setImage(new Image(file.toURI().toString(), 180, 240, true, true));
+            } catch (Exception e) {
+                showError("Image invalide : " + e.getMessage());
+            }
+        }
     }
 
     @FXML
     private void onSave() {
-        // TODO : lire les champs, appeler gameService.addGame() ou updateGame(), afficher les erreurs
+        errorLabel.setVisible(false);
+        try {
+            Game target = (game != null) ? game : new Game();
+            applyFields(target);
+            if (game == null) gameService.addGame(target);
+            else gameService.updateGame(target);
+            if (onSaved != null) onSaved.run();
+            close();
+        } catch (IllegalArgumentException e) {
+            showError(e.getMessage());
+        } catch (Exception e) {
+            showError("Erreur inattendue : " + e.getMessage());
+        }
     }
 
     @FXML
-    private void onCancel() {
-        // TODO : fermer la fenêtre sans sauvegarder
+    private void onCancel() { close(); }
+
+    private void populate(Game g) {
+        titleField.setText(nvl(g.getTitle()));
+        developerField.setText(nvl(g.getDeveloper()));
+        publisherField.setText(nvl(g.getPublisher()));
+        yearField.setText(g.getReleaseYear() != null ? String.valueOf(g.getReleaseYear()) : "");
+        platformCombo.setValue(g.getPlatform());
+        descriptionArea.setText(nvl(g.getDescription()));
+        if (g.getRating() != null) ratingSlider.setValue(g.getRating());
+        if (g.getStatus() != null) statusCombo.setValue(g.getStatus());
+        if (g.getCoverPath() != null && !g.getCoverPath().isBlank()) {
+            try { coverPreview.setImage(new Image("file:" + g.getCoverPath(), 180, 240, true, true)); }
+            catch (Exception ignored) {}
+        }
     }
+
+    private void applyFields(Game g) {
+        g.setTitle(titleField.getText());
+        g.setDeveloper(developerField.getText());
+        g.setPublisher(publisherField.getText());
+        g.setPlatform(platformCombo.getValue());
+        g.setDescription(descriptionArea.getText());
+        g.setStatus(statusCombo.getValue());
+        g.setRating(ratingSlider.getValue() > 0 ? ratingSlider.getValue() : null);
+        if (selectedCoverPath != null) g.setCoverPath(selectedCoverPath);
+        String y = yearField.getText().trim();
+        if (!y.isBlank()) {
+            try { g.setReleaseYear(Integer.parseInt(y)); }
+            catch (NumberFormatException e) { throw new IllegalArgumentException("L'année doit être un nombre (ex : 2021)."); }
+        } else {
+            g.setReleaseYear(null);
+        }
+    }
+
+    private void showError(String msg) {
+        errorLabel.setText(msg);
+        errorLabel.setVisible(true);
+    }
+
+    private String nvl(String s) { return s != null ? s : ""; }
+
+    private void close() { ((Stage) titleField.getScene().getWindow()).close(); }
 }
