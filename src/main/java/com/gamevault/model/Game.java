@@ -136,4 +136,9 @@ public class Game {
     public void setAddedAt(LocalDate addedAt) {
         this.addedAt = addedAt;
     }
+
+    @Override
+    public String toString() {
+        return "Game{id=" + id + ", title='" + title + "', platform='" + platform + "', year=" + releaseYear + ", status=" + status + "}";
+    }
 }
