@@ -1,6 +1,6 @@
 # Document de justification UX/UI – GameVault
 
-# Document de justification UX/UI – GameVault
+
 
 > Ce document explique **pourquoi** les choix de conception ont été faits
 > 
