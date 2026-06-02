@@ -3,21 +3,17 @@ package com.gamevault.controller;
 import com.gamevault.model.Game;
 import com.gamevault.model.GameStatus;
 import com.gamevault.service.GameService;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -25,7 +21,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -33,41 +28,33 @@ public class MainController implements Initializable {
     @FXML private TextField searchField;
     @FXML private ComboBox<String> platformFilter;
     @FXML private ComboBox<String> statusFilter;
-    @FXML private TableView<Game> gameTable;
-    @FXML private TableColumn<Game, String> colTitle;
-    @FXML private TableColumn<Game, String> colPlatform;
-    @FXML private TableColumn<Game, Integer> colYear;
-    @FXML private TableColumn<Game, String> colRating;
-    @FXML private TableColumn<Game, String> colStatus;
+    @FXML private FlowPane gameGrid;
     @FXML private Label statusBar;
     @FXML private Label subtitleLabel;
 
     // Detail panel
-    @FXML private Label detailEmpty;
-    @FXML private VBox  detailContent;
+    @FXML private Label     detailEmpty;
+    @FXML private VBox      detailContent;
     @FXML private ImageView detailCover;
-    @FXML private Label detailTitle;
-    @FXML private Label detailPlatform;
-    @FXML private Label detailYear;
-    @FXML private Label detailDeveloper;
-    @FXML private Label detailPublisher;
-    @FXML private Label detailRating;
-    @FXML private Label detailStatus;
-    @FXML private Label detailDescription;
+    @FXML private Label     detailTitle;
+    @FXML private Label     detailPlatform;
+    @FXML private Label     detailYear;
+    @FXML private Label     detailDeveloper;
+    @FXML private Label     detailPublisher;
+    @FXML private Label     detailRating;
+    @FXML private Label     detailStatus;
+    @FXML private Label     detailDescription;
 
     private final GameService gameService = new GameService();
-    private final ObservableList<Game> displayedGames = FXCollections.observableArrayList();
     private String currentSortField = "title";
-    private boolean sortAscending = true;
-    private boolean refreshing = false;
+    private boolean sortAscending   = true;
+    private boolean refreshing      = false;
+    private Game    selectedGame    = null;
+    private VBox    selectedCard    = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        bindColumns();
         initFilters();
-        gameTable.setItems(displayedGames);
-        gameTable.getSelectionModel().selectedItemProperty()
-                .addListener((obs, o, v) -> showDetail(v));
         searchField.textProperty().addListener((obs, o, v) -> refresh());
         refresh();
     }
@@ -84,78 +71,39 @@ public class MainController implements Initializable {
         new Alert(Alert.AlertType.INFORMATION, "Paramètres à venir.", ButtonType.OK).showAndWait();
     }
 
-    @FXML
-    private void onAddGame() { openForm(null); }
+    @FXML private void onAddGame() { openForm(null); }
 
     @FXML
     private void onEditGame() {
-        Game selected = gameTable.getSelectionModel().getSelectedItem();
-        if (selected == null) {
+        if (selectedGame == null) {
             new Alert(Alert.AlertType.WARNING, "Sélectionnez un jeu à modifier.", ButtonType.OK).showAndWait();
             return;
         }
-        openForm(selected);
+        openForm(selectedGame);
     }
 
     @FXML
     private void onDeleteGame() {
-        Game selected = gameTable.getSelectionModel().getSelectedItem();
-        if (selected == null) {
+        if (selectedGame == null) {
             new Alert(Alert.AlertType.WARNING, "Sélectionnez un jeu à supprimer.", ButtonType.OK).showAndWait();
             return;
         }
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
-                "Supprimer « " + selected.getTitle() + " » ?", ButtonType.YES, ButtonType.NO);
+                "Supprimer « " + selectedGame.getTitle() + " » ?", ButtonType.YES, ButtonType.NO);
         confirm.setHeaderText(null);
         confirm.showAndWait().filter(b -> b == ButtonType.YES).ifPresent(b -> {
             try {
-                gameService.deleteGame(selected);
+                gameService.deleteGame(selectedGame);
+                selectedGame = null;
+                selectedCard = null;
                 refresh();
             } catch (Exception e) {
-                new Alert(Alert.AlertType.ERROR, "Erreur lors de la suppression : " + e.getMessage()).showAndWait();
+                new Alert(Alert.AlertType.ERROR, "Erreur : " + e.getMessage()).showAndWait();
             }
         });
     }
 
-    private void bindColumns() {
-        colTitle.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().getTitle()));
-        colTitle.setCellFactory(col -> new TableCell<>() {
-            private final ImageView iv  = new ImageView();
-            private final Label     lbl = new Label();
-            private final HBox      box = new HBox(8, iv, lbl);
-            {
-                iv.setFitHeight(36); iv.setFitWidth(27); iv.setPreserveRatio(true);
-                box.setAlignment(Pos.CENTER_LEFT);
-            }
-            @Override
-            protected void updateItem(String title, boolean empty) {
-                super.updateItem(title, empty);
-                if (empty || title == null) { setGraphic(null); setText(null); return; }
-                lbl.setText(title);
-                int idx = getIndex();
-                if (idx >= 0 && idx < getTableView().getItems().size()) {
-                    Game g = getTableView().getItems().get(idx);
-                    if (g != null && g.getCoverPath() != null && !g.getCoverPath().isBlank()) {
-                        try { iv.setImage(new Image("file:" + g.getCoverPath(), 27, 36, true, true)); }
-                        catch (Exception ignored) { iv.setImage(null); }
-                    } else { iv.setImage(null); }
-                }
-                setGraphic(box);
-                setText(null);
-            }
-        });
-
-        colPlatform.setCellValueFactory(d -> new SimpleStringProperty(d.getValue().getPlatform()));
-        colYear.setCellValueFactory(d -> new SimpleObjectProperty<>(d.getValue().getReleaseYear()));
-        colRating.setCellValueFactory(d -> {
-            Double r = d.getValue().getRating();
-            return new SimpleStringProperty(r != null ? String.format("★ %.1f", r) : "—");
-        });
-        colStatus.setCellValueFactory(d -> {
-            GameStatus s = d.getValue().getStatus();
-            return new SimpleStringProperty(s != null ? s.getLabel() : "");
-        });
-    }
+    // ── Filters ──────────────────────────────────────────────────────────────
 
     private void initFilters() {
         platformFilter.getItems().add("Toutes plateformes");
@@ -166,38 +114,6 @@ public class MainController implements Initializable {
         for (GameStatus s : GameStatus.values()) statusFilter.getItems().add(s.getLabel());
         statusFilter.setValue("Tous statuts");
         statusFilter.setOnAction(e -> refresh());
-    }
-
-    private void refresh() {
-        if (refreshing) return;
-        refreshing = true;
-        try {
-            Long selectedId = Optional.ofNullable(gameTable.getSelectionModel().getSelectedItem())
-                    .map(Game::getId).orElse(null);
-
-            List<Game> results = gameService.search(searchField.getText());
-            String platform = "Toutes plateformes".equals(platformFilter.getValue()) ? null : platformFilter.getValue();
-            GameStatus status = resolveStatus(statusFilter.getValue());
-            results = gameService.filter(results, platform, status);
-            results = gameService.sort(results, currentSortField, sortAscending);
-            displayedGames.setAll(results);
-            statusBar.setText(results.size() + " jeu(x) affiché(s)");
-            subtitleLabel.setText(gameService.getAllGames().size() + " jeux dans la collection");
-            refreshPlatformOptions();
-
-            // Restore selection after data reload
-            if (selectedId != null) {
-                for (Game g : displayedGames) {
-                    if (selectedId.equals(g.getId())) {
-                        gameTable.getSelectionModel().select(g);
-                        break;
-                    }
-                }
-            }
-        } finally {
-            refreshing = false;
-        }
-        showDetail(gameTable.getSelectionModel().getSelectedItem());
     }
 
     private void refreshPlatformOptions() {
@@ -213,21 +129,106 @@ public class MainController implements Initializable {
         platformFilter.setValue(restored);
     }
 
-    private void sortBy(String field) {
-        if (currentSortField.equals(field)) sortAscending = !sortAscending;
-        else { currentSortField = field; sortAscending = true; }
-        refresh();
+    // ── Refresh ───────────────────────────────────────────────────────────────
+
+    private void refresh() {
+        if (refreshing) return;
+        refreshing = true;
+        try {
+            List<Game> results = gameService.search(searchField.getText());
+            String platform = "Toutes plateformes".equals(platformFilter.getValue())
+                    ? null : platformFilter.getValue();
+            GameStatus status = resolveStatus(statusFilter.getValue());
+            results = gameService.filter(results, platform, status);
+            results = gameService.sort(results, currentSortField, sortAscending);
+
+            selectedCard = null;
+            gameGrid.getChildren().clear();
+            for (Game g : results) gameGrid.getChildren().add(buildCard(g));
+
+            statusBar.setText(results.size() + " jeu(x) affiché(s)");
+            subtitleLabel.setText(gameService.getAllGames().size() + " jeux dans la collection");
+            refreshPlatformOptions();
+        } finally {
+            refreshing = false;
+        }
+
+        // If previously selected game no longer visible, clear detail panel
+        if (selectedGame != null && selectedCard == null) {
+            selectedGame = null;
+            showDetail(null);
+        }
     }
 
-    private GameStatus resolveStatus(String label) {
-        if (label == null || "Tous statuts".equals(label)) return null;
-        for (GameStatus s : GameStatus.values()) if (s.getLabel().equals(label)) return s;
-        return null;
+    // ── Card builder ──────────────────────────────────────────────────────────
+
+    private VBox buildCard(Game g) {
+        // Cover area (fixed size, with placeholder if no image)
+        StackPane coverArea = new StackPane();
+        coverArea.setPrefSize(130, 175);
+        coverArea.setMaxSize(130, 175);
+        coverArea.getStyleClass().add("card-cover");
+
+        boolean loaded = false;
+        if (g.getCoverPath() != null && !g.getCoverPath().isBlank()) {
+            try {
+                ImageView iv = new ImageView(
+                        new Image("file:" + g.getCoverPath(), 130, 175, false, true));
+                iv.setFitWidth(130);
+                iv.setFitHeight(175);
+                coverArea.getChildren().add(iv);
+                loaded = true;
+            } catch (Exception ignored) {}
+        }
+        if (!loaded) {
+            String initial = (g.getTitle() != null && !g.getTitle().isEmpty())
+                    ? String.valueOf(g.getTitle().charAt(0)).toUpperCase() : "?";
+            Label lbl = new Label(initial);
+            lbl.getStyleClass().add("card-cover-initial");
+            coverArea.getChildren().add(lbl);
+        }
+
+        Label titleLbl = new Label(g.getTitle());
+        titleLbl.getStyleClass().add("card-title");
+        titleLbl.setWrapText(true);
+        titleLbl.setMaxWidth(130);
+        titleLbl.setAlignment(Pos.CENTER);
+
+        Label platformLbl = new Label(g.getPlatform() != null ? g.getPlatform() : "");
+        platformLbl.getStyleClass().add("card-platform");
+
+        VBox card = new VBox(8, coverArea, titleLbl, platformLbl);
+        card.getStyleClass().add("game-card");
+        card.setPrefWidth(150);
+        card.setAlignment(Pos.TOP_CENTER);
+        card.setPadding(new Insets(10));
+
+        card.setOnMouseClicked(e -> selectCard(card, g));
+
+        // Restore visual selection if this card was previously selected
+        if (selectedGame != null && selectedGame.getId() != null
+                && selectedGame.getId().equals(g.getId())) {
+            card.getStyleClass().add("game-card-selected");
+            selectedCard = card;
+            showDetail(g);
+        }
+
+        return card;
     }
+
+    private void selectCard(VBox card, Game g) {
+        if (selectedCard != null) selectedCard.getStyleClass().remove("game-card-selected");
+        selectedGame = g;
+        selectedCard = card;
+        card.getStyleClass().add("game-card-selected");
+        showDetail(g);
+    }
+
+    // ── Detail panel ──────────────────────────────────────────────────────────
 
     private void showDetail(Game game) {
         if (game == null) {
-            detailEmpty.setVisible(true);   detailEmpty.setManaged(true);
+            detailEmpty.setVisible(true);    detailEmpty.setManaged(true);
             detailContent.setVisible(false); detailContent.setManaged(false);
             return;
         }
@@ -239,16 +240,32 @@ public class MainController implements Initializable {
         detailYear.setText(game.getReleaseYear() != null ? String.valueOf(game.getReleaseYear()) : "—");
         detailDeveloper.setText(nvl(game.getDeveloper(), "—"));
         detailPublisher.setText(nvl(game.getPublisher(), "—"));
-        detailRating.setText(game.getRating() != null ? String.format("★ %.1f / 10", game.getRating()) : "—");
+        detailRating.setText(game.getRating() != null
+                ? String.format("★ %.1f / 10", game.getRating()) : "—");
         detailStatus.setText(game.getStatus() != null ? game.getStatus().getLabel() : "—");
         detailDescription.setText(nvl(game.getDescription(), ""));
 
         if (game.getCoverPath() != null && !game.getCoverPath().isBlank()) {
-            try { detailCover.setImage(new Image("file:" + game.getCoverPath(), 210, 280, true, true)); }
+            try { detailCover.setImage(
+                    new Image("file:" + game.getCoverPath(), 220, 300, true, true)); }
             catch (Exception ignored) { detailCover.setImage(null); }
         } else {
             detailCover.setImage(null);
         }
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    private void sortBy(String field) {
+        if (currentSortField.equals(field)) sortAscending = !sortAscending;
+        else { currentSortField = field; sortAscending = true; }
+        refresh();
+    }
+
+    private GameStatus resolveStatus(String label) {
+        if (label == null || "Tous statuts".equals(label)) return null;
+        for (GameStatus s : GameStatus.values()) if (s.getLabel().equals(label)) return s;
+        return null;
     }
 
     private String nvl(String s, String def) {
