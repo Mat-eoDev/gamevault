@@ -41,13 +41,12 @@ GameVault est l'application desktop qui remplace leurs feuilles de calcul disper
 
 ## Prérequis
 
-- [Java 21+](https://adoptium.net/)
-- [Maven 3.8+](https://maven.apache.org/download.cgi)
+- [Java 21+](https://adoptium.net/) — **seul prérequis obligatoire**
+- Maven 3.8+ *(optionnel — le projet inclut un Maven Wrapper)*
 
-Vérifier les installations :
+Vérifier Java :
 ```bash
 java --version
-mvn --version
 ```
 
 ---
@@ -59,24 +58,41 @@ mvn --version
 git clone https://github.com/Mat-eoDev/gamevault.git
 cd gamevault
 
-# 2. Se placer sur la branche de développement
+# 2. Se placer sur la branche principale
 git checkout dev
+```
 
-# 3. Compiler le projet
-mvn clean compile
+**Option A — avec le Maven Wrapper (Maven non requis)**
+```bash
+# macOS / Linux
+./mvnw javafx:run
 
-# 4. Lancer l'application
+# Windows
+mvnw.cmd javafx:run
+```
+
+**Option B — avec Maven installé**
+```bash
 mvn javafx:run
 ```
 
-La base de données SQLite (`gamevault.db`) est créée automatiquement au premier lancement dans le répertoire courant.
+**Option C — fat JAR (aucun outil requis, Java 21 uniquement)**
+```bash
+# Générer le JAR
+./mvnw package          # ou : mvn package
+
+# Lancer
+java -jar target/gamevault-1.0.0-fat.jar
+```
+
+La base de données SQLite (`gamevault.db`) est créée automatiquement au premier lancement.
 
 ---
 
 ## Lancer les tests
 
 ```bash
-mvn test
+./mvnw test    # ou : mvn test
 ```
 
 ---
