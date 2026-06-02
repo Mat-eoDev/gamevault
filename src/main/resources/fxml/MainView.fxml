@@ -84,4 +84,49 @@
         </VBox>
     </center>
 
+    <!-- DETAIL PANEL -->
+    <right>
+        <ScrollPane fitToWidth="true" prefWidth="290" hbarPolicy="NEVER" styleClass="detail-scroll">
+            <VBox spacing="14" styleClass="detail-panel">
+                <padding><Insets top="28" right="20" bottom="28" left="20"/></padding>
+
+                <!-- Empty state -->
+                <Label fx:id="detailEmpty"
+                       text="Sélectionnez un jeu&#10;pour voir ses détails"
+                       styleClass="detail-empty" wrapText="true"
+                       maxWidth="Infinity" textAlignment="CENTER"/>
+
+                <!-- Game details -->
+                <VBox fx:id="detailContent" spacing="12" visible="false" managed="false">
+                    <ImageView fx:id="detailCover" fitWidth="210" fitHeight="280"
+                               preserveRatio="true"/>
+                    <Label fx:id="detailTitle" styleClass="detail-title" wrapText="true"/>
+                    <Separator/>
+                    <GridPane hgap="10" vgap="8">
+                        <columnConstraints>
+                            <ColumnConstraints prefWidth="85" minWidth="85"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+                        <Label text="Plateforme"  styleClass="detail-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailPlatform"    styleClass="detail-value" wrapText="true" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <Label text="Année"       styleClass="detail-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailYear"        styleClass="detail-value" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <Label text="Développeur" styleClass="detail-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailDeveloper"   styleClass="detail-value" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <Label text="Éditeur"     styleClass="detail-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailPublisher"   styleClass="detail-value" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <Label text="Note"        styleClass="detail-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailRating"      styleClass="detail-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                        <Label text="Statut"      styleClass="detail-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <Label fx:id="detailStatus"      styleClass="detail-value" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    </GridPane>
+                    <Separator/>
+                    <Label text="Description" styleClass="detail-label"/>
+                    <Label fx:id="detailDescription" styleClass="description" wrapText="true"/>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </right>
+
 </BorderPane>
