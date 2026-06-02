@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gamevault.controller.MainController"
+            styleClass="app-root"
+            prefWidth="1280" prefHeight="800">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="top-bar">
+            <padding><Insets top="10" right="24" bottom="10" left="24"/></padding>
+            <ImageView fitWidth="220" fitHeight="70" preserveRatio="true">
+                <image><Image url="@../images/logo.png"/></image>
+            </ImageView>
+            <Region HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="searchField" promptText="Recherche..." prefWidth="260"
+                       styleClass="search-field" onAction="#onSearch"/>
+            <Button text="🔍" onAction="#onSearch" styleClass="small-button"/>
+        </HBox>
+    </top>
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox spacing="8" prefWidth="220" styleClass="side-menu">
+            <padding><Insets top="28" right="18" bottom="28" left="18"/></padding>
+            <Label text="MENU" styleClass="menu-title"/>
+            <Button text="📚  Collection"     maxWidth="Infinity" styleClass="menu-button-active" onAction="#onShowCollection"/>
+            <Button text="➕  Ajouter un jeu" maxWidth="Infinity" styleClass="menu-button" onAction="#onAddGame"/>
+            <Button text="⚙  Paramètres"     maxWidth="Infinity" styleClass="menu-button" onAction="#onSettings"/>
+        </VBox>
+    </left>
+
+    <!-- CENTER -->
+    <center>
+        <VBox spacing="18" styleClass="content-area">
+            <padding><Insets top="26" right="26" bottom="26" left="26"/></padding>
+
+            <HBox alignment="CENTER_LEFT">
+                <VBox>
+                    <Label text="Ma collection" styleClass="page-title"/>
+                    <Label fx:id="subtitleLabel" text="" styleClass="page-subtitle"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Ajouter" styleClass="primary-button" onAction="#onAddGame"/>
+            </HBox>
+
+            <VBox spacing="10" styleClass="filter-card">
+                <padding><Insets top="16" right="18" bottom="16" left="18"/></padding>
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="Filtres :" styleClass="section-label"/>
+                    <ComboBox fx:id="platformFilter" promptText="Toutes plateformes" prefWidth="180"/>
+                    <ComboBox fx:id="statusFilter"   promptText="Tous statuts"       prefWidth="150"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Tri :" styleClass="section-label"/>
+                    <Button text="Titre"      styleClass="small-button" onAction="#onSortTitle"/>
+                    <Button text="Année"      styleClass="small-button" onAction="#onSortYear"/>
+                    <Button text="Note"       styleClass="small-button" onAction="#onSortRating"/>
+                    <Button text="Plateforme" styleClass="small-button" onAction="#onSortPlatform"/>
+                </HBox>
+            </VBox>
+
+            <TableView fx:id="gameTable" VBox.vgrow="ALWAYS" styleClass="game-table">
+                <columns>
+                    <TableColumn fx:id="colTitle"    text="TITRE"      prefWidth="310"/>
+                    <TableColumn fx:id="colPlatform" text="PLATEFORME" prefWidth="160"/>
+                    <TableColumn fx:id="colYear"     text="ANNÉE"      prefWidth="80"/>
+                    <TableColumn fx:id="colRating"   text="NOTE"       prefWidth="80"/>
+                    <TableColumn fx:id="colStatus"   text="STATUT"     prefWidth="130"/>
+                </columns>
+                <placeholder><Label text="Aucun jeu dans la collection"/></placeholder>
+            </TableView>
+
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="status-bar">
+                <Label fx:id="statusBar" text="" styleClass="page-subtitle"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Modifier"  styleClass="secondary-button" onAction="#onEditGame"/>
+                <Button text="Supprimer" styleClass="danger-button"    onAction="#onDeleteGame"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

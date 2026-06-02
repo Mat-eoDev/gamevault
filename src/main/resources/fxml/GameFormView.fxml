@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.gamevault.controller.GameFormController"
+            styleClass="app-root"
+            prefWidth="860" prefHeight="680">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="top-bar">
+            <padding><Insets top="10" right="24" bottom="10" left="24"/></padding>
+            <ImageView fitWidth="220" fitHeight="70" preserveRatio="true">
+                <image><Image url="@../images/logo.png"/></image>
+            </ImageView>
+            <Label fx:id="breadcrumbLabel" text="> Ajouter un jeu" styleClass="breadcrumb"/>
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="22" styleClass="content-area">
+            <padding><Insets top="30" right="50" bottom="30" left="50"/></padding>
+
+            <Label fx:id="formTitle" text="Ajouter un jeu" styleClass="page-title"/>
+
+            <HBox spacing="28" styleClass="form-card">
+                <padding><Insets top="28" right="28" bottom="28" left="28"/></padding>
+
+                <!-- Cover preview -->
+                <VBox spacing="12" alignment="TOP_CENTER" prefWidth="200">
+                    <ImageView fx:id="coverPreview" fitWidth="180" fitHeight="240" preserveRatio="true">
+                        <image><Image url="@../images/logo.png"/></image>
+                    </ImageView>
+                    <Button text="Choisir une image" styleClass="secondary-button"
+                            maxWidth="Infinity" onAction="#onChooseCover"/>
+                </VBox>
+
+                <!-- Fields -->
+                <GridPane hgap="18" vgap="14" HBox.hgrow="ALWAYS">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="150"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <Label text="Titre *" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="titleField" promptText="Saisir un titre..." GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Développeur" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="developerField" promptText="Studio de développement" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Éditeur" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="publisherField" promptText="Éditeur" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Année de sortie" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="yearField" promptText="ex : 2021" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Plateforme *" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="platformCombo" maxWidth="Infinity" editable="true" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label text="Statut" styleClass="form-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="statusCombo" maxWidth="Infinity" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <Label text="Note (0 – 10)" styleClass="form-label" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="6" GridPane.columnIndex="1">
+                        <Slider fx:id="ratingSlider" min="0" max="10" value="0"
+                                showTickLabels="true" showTickMarks="true" majorTickUnit="2" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="ratingLabel" text="0.0 / 10" styleClass="section-label" prefWidth="60"/>
+                    </HBox>
+
+                    <Label text="Description" styleClass="form-label" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                    <TextArea fx:id="descriptionArea" promptText="Description du jeu..."
+                              prefRowCount="4" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                </GridPane>
+            </HBox>
+
+            <Label fx:id="errorLabel" styleClass="error-label" wrapText="true" visible="false"/>
+
+            <HBox spacing="12" alignment="CENTER_RIGHT">
+                <Button text="Annuler"      styleClass="secondary-button" onAction="#onCancel"/>
+                <Button text="Enregistrer"  styleClass="primary-button"   onAction="#onSave"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

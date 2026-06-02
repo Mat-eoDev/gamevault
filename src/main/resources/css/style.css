@@ -1,0 +1,252 @@
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+.app-root {
+    -fx-background-color: #ffffff;
+    -fx-font-family: "Segoe UI", "Inter", Arial, sans-serif;
+}
+
+/* ── Top bar ──────────────────────────────────────────────────────────────── */
+.top-bar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #eeeeee;
+    -fx-border-width: 0 0 1 0;
+}
+
+.breadcrumb {
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #575b66;
+}
+
+.search-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e2e3e8;
+    -fx-border-radius: 9;
+    -fx-background-radius: 9;
+    -fx-padding: 9 12;
+    -fx-font-size: 13px;
+}
+
+/* ── Side menu ────────────────────────────────────────────────────────────── */
+.side-menu {
+    -fx-background-color: #fafafa;
+    -fx-border-color: #eeeeee;
+    -fx-border-width: 0 1 0 0;
+}
+
+.menu-title {
+    -fx-font-size: 13px;
+    -fx-text-fill: #9a9da5;
+    -fx-font-weight: 600;
+}
+
+.menu-button, .menu-button-active {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 11 14;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #777b85;
+}
+
+.menu-button:hover {
+    -fx-background-color: #f0f0f3;
+    -fx-text-fill: #202124;
+}
+
+.menu-button-active {
+    -fx-background-color: #f0eeff;
+    -fx-text-fill: #5b21b6;
+    -fx-font-weight: 700;
+}
+
+/* ── Content ──────────────────────────────────────────────────────────────── */
+.content-area {
+    -fx-background-color: #f7f8fc;
+}
+
+.page-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1a1a2e;
+}
+
+.page-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #9a9da5;
+}
+
+.section-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #2d2d3a;
+}
+
+.section-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #575b66;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+.primary-button {
+    -fx-background-color: #5b21b6;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10 22;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.primary-button:hover { -fx-background-color: #4c1d95; }
+
+.secondary-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #575b66;
+    -fx-border-color: #e2e3e8;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 10 22;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.secondary-button:hover { -fx-background-color: #f0f0f3; }
+
+.danger-button {
+    -fx-background-color: #fff0f0;
+    -fx-text-fill: #c0392b;
+    -fx-border-color: #f5c6cb;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 10 22;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.danger-button:hover { -fx-background-color: #fde8e8; }
+
+.small-button {
+    -fx-background-color: #f0f0f3;
+    -fx-text-fill: #575b66;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 6 14;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+}
+
+.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #5b21b6;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+}
+
+.logo-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+}
+
+/* ── Cards ────────────────────────────────────────────────────────────────── */
+.filter-card, .form-card, .detail-card, .table-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 14;
+    -fx-border-color: #eeeeee;
+    -fx-border-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);
+}
+
+/* ── Table ────────────────────────────────────────────────────────────────── */
+.game-table {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #eeeeee;
+    -fx-border-radius: 14;
+    -fx-background-radius: 14;
+}
+
+.game-table .column-header-background {
+    -fx-background-color: #f7f8fc;
+}
+
+.game-table .column-header .label {
+    -fx-font-weight: 700;
+    -fx-text-fill: #9a9da5;
+    -fx-font-size: 11px;
+}
+
+.game-table .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #f0f0f3 transparent;
+}
+
+.game-table .table-row-cell:selected {
+    -fx-background-color: #f0eeff;
+}
+
+.game-table .table-row-cell:hover {
+    -fx-background-color: #fafafa;
+}
+
+/* ── Form ─────────────────────────────────────────────────────────────────── */
+.form-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #575b66;
+}
+
+.error-label {
+    -fx-text-fill: #c0392b;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+}
+
+/* ── Detail ───────────────────────────────────────────────────────────────── */
+.detail-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1a1a2e;
+}
+
+.detail-label {
+    -fx-font-weight: 700;
+    -fx-text-fill: #9a9da5;
+    -fx-font-size: 13px;
+}
+
+.detail-value {
+    -fx-text-fill: #2d2d3a;
+    -fx-font-size: 13px;
+}
+
+.description {
+    -fx-text-fill: #575b66;
+    -fx-font-size: 13px;
+}
+
+/* ── Status badges ────────────────────────────────────────────────────────── */
+.status-done       { -fx-text-fill: #27ae60; -fx-font-weight: 700; }
+.status-progress   { -fx-text-fill: #e67e22; -fx-font-weight: 700; }
+.status-todo       { -fx-text-fill: #2980b9; -fx-font-weight: 700; }
+.status-abandoned  { -fx-text-fill: #9a9da5; -fx-font-weight: 700; }
+.status-collection { -fx-text-fill: #8e44ad; -fx-font-weight: 700; }
+
+/* ── Cover ────────────────────────────────────────────────────────────────── */
+.cover-placeholder { -fx-fill: #e8e0ff; }
+.cover-large       { -fx-fill: #e8e0ff; }
+
+/* ── Status bar ───────────────────────────────────────────────────────────── */
+.status-bar {
+    -fx-background-color: #f7f8fc;
+    -fx-border-color: #eeeeee;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 6 24;
+}
